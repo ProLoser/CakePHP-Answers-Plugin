@@ -1,5 +1,5 @@
 <?php
-class Question extends AppModel {
+class Question extends AnswersAppModel {
 
 	var $name = 'Question';
 	var $validate = array(
@@ -9,6 +9,11 @@ class Question extends AppModel {
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
+	var $hasOne = array(
+		'BestAnswer',
+		'StarQuestion',
+	);
+	
 	var $belongsTo = array(
 		'User' => array(
 			'className' => 'User',
@@ -18,7 +23,7 @@ class Question extends AppModel {
 			'order' => ''
 		),
 		'Category' => array(
-			'className' => 'Category',
+			'className' => 'Answers.Category',
 			'foreignKey' => 'category_id',
 			'conditions' => '',
 			'fields' => '',
@@ -28,7 +33,7 @@ class Question extends AppModel {
 
 	var $hasMany = array(
 		'Answer' => array(
-			'className' => 'Answer',
+			'className' => 'Answers.Answer',
 			'foreignKey' => 'question_id',
 			'dependent' => false,
 			'conditions' => '',
@@ -44,7 +49,7 @@ class Question extends AppModel {
 
 	var $hasAndBelongsToMany = array(
 		'Tag' => array(
-			'className' => 'Tag',
+			'className' => 'Answers.Tag',
 			'joinTable' => 'questions_tags',
 			'foreignKey' => 'question_id',
 			'associationForeignKey' => 'tag_id',
@@ -59,7 +64,7 @@ class Question extends AppModel {
 			'insertQuery' => ''
 		),
 		'Topic' => array(
-			'className' => 'Topic',
+			'className' => 'Answers.Topic',
 			'joinTable' => 'questions_topics',
 			'foreignKey' => 'question_id',
 			'associationForeignKey' => 'topic_id',

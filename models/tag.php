@@ -1,5 +1,5 @@
 <?php
-class Tag extends AppModel {
+class Tag extends AnswersAppModel {
 
 	var $name = 'Tag';
 	var $validate = array(
@@ -8,8 +8,8 @@ class Tag extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $hasAndBelongsToMany = array(
-		'Question' => array(
-			'className' => 'Question',
+		'Answers.Question' => array(
+			'className' => 'Answers.Question',
 			'joinTable' => 'questions_tags',
 			'foreignKey' => 'tag_id',
 			'associationForeignKey' => 'question_id',
