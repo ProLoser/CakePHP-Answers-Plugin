@@ -25,18 +25,13 @@ class Category extends AnswersAppModel {
 	);
 
 	var $hasAndBelongsToMany = array(
-		'User' => array(
-			'className' => 'User',
+		'Consultant' => array(
 			'unique' => true,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => ''
+		),
+		'Question' => array(
+			'unique' => true,
 		)
+	);
 	);
 
 }
