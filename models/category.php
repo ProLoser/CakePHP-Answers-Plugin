@@ -32,7 +32,6 @@ class Category extends AnswersAppModel {
 			'unique' => true,
 		)
 	);
-	);
 
 }
 ?>
