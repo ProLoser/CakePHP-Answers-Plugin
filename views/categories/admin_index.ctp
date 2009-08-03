@@ -12,11 +12,7 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('created');?></th>
 	<th><?php echo $paginator->sort('modified');?></th>
 	<th><?php echo $paginator->sort('name');?></th>
-	<th><?php echo $paginator->sort('description');?></th>
-	<th><?php echo $paginator->sort('specials');?></th>
 	<th><?php echo $paginator->sort('parent_id');?></th>
-	<th><?php echo $paginator->sort('rght');?></th>
-	<th><?php echo $paginator->sort('lft');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
 <?php
@@ -41,19 +37,7 @@ foreach ($categories as $category):
 			<?php echo $category['Category']['name']; ?>
 		</td>
 		<td>
-			<?php echo $category['Category']['description']; ?>
-		</td>
-		<td>
-			<?php echo $category['Category']['specials']; ?>
-		</td>
-		<td>
 			<?php echo $category['Category']['parent_id']; ?>
-		</td>
-		<td>
-			<?php echo $category['Category']['rght']; ?>
-		</td>
-		<td>
-			<?php echo $category['Category']['lft']; ?>
 		</td>
 		<td class="actions">
 			<?php echo $html->link(__('View', true), array('action'=>'view', $category['Category']['id'])); ?>
@@ -72,9 +56,5 @@ foreach ($categories as $category):
 <div class="actions">
 	<ul>
 		<li><?php echo $html->link(__('New Category', true), array('action'=>'add')); ?></li>
-		<li><?php echo $html->link(__('List Questions', true), array('controller'=> 'questions', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Question', true), array('controller'=> 'questions', 'action'=>'add')); ?> </li>
-		<li><?php echo $html->link(__('List Consultants', true), array('controller'=> 'consultants', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Consultant', true), array('controller'=> 'consultants', 'action'=>'add')); ?> </li>
 	</ul>
 </div>
