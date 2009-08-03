@@ -12,8 +12,6 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('created');?></th>
 	<th><?php echo $paginator->sort('modified');?></th>
 	<th><?php echo $paginator->sort('name');?></th>
-	<th><?php echo $paginator->sort('description');?></th>
-	<th><?php echo $paginator->sort('specials');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
 <?php
@@ -37,12 +35,6 @@ foreach ($topics as $topic):
 		<td>
 			<?php echo $topic['Topic']['name']; ?>
 		</td>
-		<td>
-			<?php echo $topic['Topic']['description']; ?>
-		</td>
-		<td>
-			<?php echo $topic['Topic']['specials']; ?>
-		</td>
 		<td class="actions">
 			<?php echo $html->link(__('View', true), array('action'=>'view', $topic['Topic']['id'])); ?>
 			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $topic['Topic']['id'])); ?>
@@ -61,7 +53,6 @@ foreach ($topics as $topic):
 	<ul>
 		<li><?php echo $html->link(__('New Topic', true), array('action'=>'add')); ?></li>
 		<li><?php echo $html->link(__('List Consultants', true), array('controller'=> 'consultants', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Consultant', true), array('controller'=> 'consultants', 'action'=>'add')); ?> </li>
 		<li><?php echo $html->link(__('List Questions', true), array('controller'=> 'questions', 'action'=>'index')); ?> </li>
 		<li><?php echo $html->link(__('New Question', true), array('controller'=> 'questions', 'action'=>'add')); ?> </li>
 	</ul>

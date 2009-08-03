@@ -64,11 +64,11 @@
 		?>
 		<tr<?php echo $class;?>>
 			<td><?php echo $question['created'];?></td>
-			<td><?php echo $question['subject'];?></td>
-			<td><?php echo $question['message'];?></td>
+			<td><?php echo $question['title'];?></td>
+			<td><?php echo $question['details'];?></td>
 			<td><?php echo $question['user_id'];?></td>
 			<td><?php echo $question['category_id'];?></td>
-			<td><?php echo $question['points'];?></td>
+			<td><?php echo $question['answer_count'];?></td>
 			<td class="actions">
 				<?php echo $html->link(__('View', true), array('controller'=> 'questions', 'action'=>'view', $question['id'])); ?>
 				<?php echo $html->link(__('Edit', true), array('controller'=> 'questions', 'action'=>'edit', $question['id'])); ?>
