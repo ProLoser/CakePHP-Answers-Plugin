@@ -18,12 +18,12 @@
 		</dd>
 		<dt</dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $question['Question']['subject']; ?>
+			<?php echo $question['Question']['title']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Message'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Details'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $question['Question']['message']; ?>
+			<?php echo $question['Question']['details']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('User'); ?></dt>
@@ -36,9 +36,9 @@
 			<?php echo $html->link($question['Category']['name'], array('controller'=> 'categories', 'action'=>'view', $question['Category']['id'])); ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Points'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Answer_count'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $question['Question']['points']; ?>
+			<?php echo $question['Question']['answer_count']; ?>
 			&nbsp;
 		</dd>
 	</dl>
@@ -149,8 +149,6 @@
 		<th><?php __('Created'); ?></th>
 		<th><?php __('Modified'); ?></th>
 		<th><?php __('Name'); ?></th>
-		<th><?php __('Description'); ?></th>
-		<th><?php __('Specials'); ?></th>
 		<th class="actions"><?php __('Actions');?></th>
 	</tr>
 	<?php
@@ -166,8 +164,6 @@
 			<td><?php echo $topic['created'];?></td>
 			<td><?php echo $topic['modified'];?></td>
 			<td><?php echo $topic['name'];?></td>
-			<td><?php echo $topic['description'];?></td>
-			<td><?php echo $topic['specials'];?></td>
 			<td class="actions">
 				<?php echo $html->link(__('View', true), array('controller'=> 'topics', 'action'=>'view', $topic['id'])); ?>
 				<?php echo $html->link(__('Edit', true), array('controller'=> 'topics', 'action'=>'edit', $topic['id'])); ?>

@@ -11,11 +11,11 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('created');?></th>
 	<th><?php echo $paginator->sort('modified');?></th>
-	<th><?php echo $paginator->sort('subject');?></th>
-	<th><?php echo $paginator->sort('message');?></th>
+	<th><?php echo $paginator->sort('title');?></th>
+	<th><?php echo $paginator->sort('details');?></th>
 	<th><?php echo $paginator->sort('user_id');?></th>
 	<th><?php echo $paginator->sort('category_id');?></th>
-	<th><?php echo $paginator->sort('points');?></th>
+	<th><?php echo $paginator->sort('answer_count');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
 <?php
@@ -37,10 +37,10 @@ foreach ($questions as $question):
 			<?php echo $question['Question']['modified']; ?>
 		</td>
 		<td>
-			<?php echo $question['Question']['subject']; ?>
+			<?php echo $question['Question']['title']; ?>
 		</td>
 		<td>
-			<?php echo $question['Question']['message']; ?>
+			<?php echo $question['Question']['details']; ?>
 		</td>
 		<td>
 			<?php echo $html->link($question['User']['id'], array('controller'=> 'users', 'action'=>'view', $question['User']['id'])); ?>
@@ -49,7 +49,7 @@ foreach ($questions as $question):
 			<?php echo $html->link($question['Category']['name'], array('controller'=> 'categories', 'action'=>'view', $question['Category']['id'])); ?>
 		</td>
 		<td>
-			<?php echo $question['Question']['points']; ?>
+			<?php echo $question['Question']['answer_count']; ?>
 		</td>
 		<td class="actions">
 			<?php echo $html->link(__('View', true), array('action'=>'view', $question['Question']['id'])); ?>

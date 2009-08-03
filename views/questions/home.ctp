@@ -27,7 +27,7 @@ foreach ($questions as $question):
 			<?php echo $question['Question']['created']; ?>
 		</td>
 		<td>
-			<?php echo $question['Question']['subject']; ?>
+			<?php echo $question['Question']['title']; ?>
 		</td>
 		<td>
 			<?php echo $html->link($question['User']['username'], array('controller'=> 'users', 'action'=>'view', $question['User']['id'])); ?>
