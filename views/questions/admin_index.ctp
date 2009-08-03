@@ -15,7 +15,6 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('details');?></th>
 	<th><?php echo $paginator->sort('user_id');?></th>
 	<th><?php echo $paginator->sort('category_id');?></th>
-	<th><?php echo $paginator->sort('answer_count');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
 <?php
@@ -43,13 +42,10 @@ foreach ($questions as $question):
 			<?php echo $question['Question']['details']; ?>
 		</td>
 		<td>
-			<?php echo $html->link($question['User']['id'], array('controller'=> 'users', 'action'=>'view', $question['User']['id'])); ?>
+			<?php echo $html->link($question['User']['username'], array('controller'=> 'users', 'action'=>'view', $question['User']['id'])); ?>
 		</td>
 		<td>
 			<?php echo $html->link($question['Category']['name'], array('controller'=> 'categories', 'action'=>'view', $question['Category']['id'])); ?>
-		</td>
-		<td>
-			<?php echo $question['Question']['answer_count']; ?>
 		</td>
 		<td class="actions">
 			<?php echo $html->link(__('View', true), array('action'=>'view', $question['Question']['id'])); ?>
@@ -64,19 +60,4 @@ foreach ($questions as $question):
 	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
  | 	<?php echo $paginator->numbers();?>
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
-</div>
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('New Question', true), array('action'=>'add')); ?></li>
-		<li><?php echo $html->link(__('List Users', true), array('controller'=> 'users', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New User', true), array('controller'=> 'users', 'action'=>'add')); ?> </li>
-		<li><?php echo $html->link(__('List Categories', true), array('controller'=> 'categories', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Category', true), array('controller'=> 'categories', 'action'=>'add')); ?> </li>
-		<li><?php echo $html->link(__('List Answers', true), array('controller'=> 'answers', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Answer', true), array('controller'=> 'answers', 'action'=>'add')); ?> </li>
-		<li><?php echo $html->link(__('List Tags', true), array('controller'=> 'tags', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Tag', true), array('controller'=> 'tags', 'action'=>'add')); ?> </li>
-		<li><?php echo $html->link(__('List Topics', true), array('controller'=> 'topics', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Topic', true), array('controller'=> 'topics', 'action'=>'add')); ?> </li>
-	</ul>
 </div>

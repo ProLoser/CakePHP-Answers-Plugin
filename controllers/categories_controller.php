@@ -16,7 +16,7 @@ class CategoriesController extends AnswersAppController {
 		$this->set('category', $this->Category->read(null, $id));
 	}
 
-	function add() {
+	/*function add() {
 		if (!empty($this->data)) {
 			$this->Category->create();
 			if ($this->Category->save($this->data)) {
@@ -61,7 +61,7 @@ class CategoriesController extends AnswersAppController {
 			$this->Session->setFlash(__('Category deleted', true));
 			$this->redirect(array('action'=>'index'));
 		}
-	}
+	}*/
 
 
 	function admin_index() {
@@ -87,8 +87,8 @@ class CategoriesController extends AnswersAppController {
 				$this->Session->setFlash(__('The Category could not be saved. Please, try again.', true));
 			}
 		}
-		$consultants = $this->Category->Consultant->find('list');
-		$this->set(compact('consultants'));
+		$parents = $this->Category->generatetreelist(null, null, null, '&nbsp;&nbsp;&nbsp;');
+		$this->set(compact('parents'));
 	}
 
 	function admin_edit($id = null) {
@@ -107,8 +107,8 @@ class CategoriesController extends AnswersAppController {
 		if (empty($this->data)) {
 			$this->data = $this->Category->read(null, $id);
 		}
-		$consultants = $this->Category->Consultant->find('list');
-		$this->set(compact('consultants'));
+		$parents = $this->Category->generatetreelist(null, null, null, '&nbsp;&nbsp;&nbsp;');
+		$this->set(compact('parents'));
 	}
 
 	function admin_delete($id = null) {

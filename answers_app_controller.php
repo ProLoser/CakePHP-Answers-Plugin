@@ -1,6 +1,8 @@
 <?php
 
 class AnswersAppController extends AppController {
+	
+	var $helpers = array('Html', 'Form', 'Javascript', 'Time');
 
 	function beforeFilter() {
 		// Ensures that all models joined with Authenticated users use the right table.

@@ -9,7 +9,7 @@ foreach ($categoriesNavigation as $id => $category):
 		$class = ' class="altrow"';
 	}
 ?>
-		<li<?php echo $class;?>><?php echo $html->link($category, array('controller'=>'categories', 'action'=>'view', $id)); ?></li>
+		<li<?php echo $class;?>><?php echo $html->link($category, array('plugin'=>'answers','controller'=>'categories', 'action'=>'view', $id), null, null, false); ?></li>
 <?php endforeach; ?>
 	</ul>
 </div>

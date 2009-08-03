@@ -12,6 +12,7 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('created');?></th>
 	<th><?php echo $paginator->sort('modified');?></th>
 	<th><?php echo $paginator->sort('name');?></th>
+	<th><?php echo $paginator->sort('parent_id');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
 <?php
@@ -34,6 +35,9 @@ foreach ($categories as $category):
 		</td>
 		<td>
 			<?php echo $category['Category']['name']; ?>
+		</td>
+		<td>
+			<?php echo $category['Category']['parent_id']; ?>
 		</td>
 		<td class="actions">
 			<?php echo $html->link(__('View', true), array('action'=>'view', $category['Category']['id'])); ?>
