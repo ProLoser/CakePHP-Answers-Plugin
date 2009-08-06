@@ -30,10 +30,11 @@ class AnswersController extends AnswersAppController {
 				$this->Session->setFlash(__('The Answer could not be saved. Please, try again.', true));
 			}
 		}
-		
 		if (empty($this->data)) {
 			$this->data['Answer']['question_id'] = $id;
 		}
+		$question = $this->Answer->Question->read(null, $id);
+		$this->set(compact('question'));
 	}
 
 	function edit($id = null) {

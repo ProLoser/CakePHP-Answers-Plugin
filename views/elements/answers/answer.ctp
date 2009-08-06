@@ -1,0 +1,2 @@
+<p><?php echo $answer['answer']; ?></p>
+<?php echo $html->link($answer['User']['username'], array('controller'=> 'users', 'action'=>'view', $answer['User']['id'])); ?> - <?php echo $time->timeAgoInWords($answer['created']); ?>

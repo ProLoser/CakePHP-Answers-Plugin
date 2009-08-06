@@ -21,7 +21,14 @@
 		}
 	?>
 		<li<?php echo $class;?>>
-			<?php echo $this->element('questions/question', array('plugin'=>'answers', 'question'=>$question)); ?>
+			<?php				
+				if (isset($size)) {
+					$options['size'] =  $size;
+				}
+				$options['question'] = (isset($question['Question'])) ? array_merge($question['Question'], $question) : $question;
+				$options['plugin'] = 'answers';
+				echo $this->element('questions/question', $options); 
+			?>
 		</li>
 	<?php endforeach; ?>
 	</ul>

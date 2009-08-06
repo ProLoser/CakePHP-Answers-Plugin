@@ -7,6 +7,7 @@ class Question extends AnswersAppModel {
 		'message' => array('notempty'),
 		'answer_count' => array('numeric')
 	);
+	var $actsAs = array('Containable');
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $hasOne = array(

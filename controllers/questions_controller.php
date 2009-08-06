@@ -9,12 +9,12 @@ class QuestionsController extends AnswersAppController {
 	}
 	
 	function home() {
-		$this->Question->recursive = 0;
+		$this->Question->recursive = 2;
 		$this->set('questions', $this->paginate());
 	}
 
 	function index() {
-		$this->Question->recursive = 0;
+		$this->Question->recursive = 2;
 		$this->set('questions', $this->paginate());
 	}
 
@@ -23,7 +23,12 @@ class QuestionsController extends AnswersAppController {
 			$this->Session->setFlash(__('Invalid Question.', true));
 			$this->redirect(array('action'=>'index'));
 		}
-		$this->set('question', $this->Question->read(null, $id));
+		$this->set('question', $this->Question->find('first', array(
+			'conditions' => array('Question.id' => $id),
+			'contain' => array('User', 'Topic', 'Category', 'Answer' => array(
+				'User'
+			))
+		)));
 	}
 
 	function add() {

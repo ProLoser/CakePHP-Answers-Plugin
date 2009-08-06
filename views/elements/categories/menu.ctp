@@ -1,4 +1,4 @@
-<div class="categoriesMenu">
+<div class="menu">
 	<ul>
 		<li class="header">Categories</li>
 <?php

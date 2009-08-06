@@ -13,6 +13,7 @@ class CategoriesController extends AnswersAppController {
 			$this->Session->setFlash(__('Invalid Category.', true));
 			$this->redirect(array('action'=>'index'));
 		}
+		$this->Category->recursive = 2;
 		$this->set('category', $this->Category->read(null, $id));
 	}
 
