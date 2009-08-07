@@ -3,10 +3,6 @@ class AnswersController extends AnswersAppController {
 
 	var $name = 'Answers';
 
-	function index() {
-		$this->redirect(array('controller'=>'questions'));
-	}
-
 	function view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid Answer.', true));
@@ -17,8 +13,14 @@ class AnswersController extends AnswersAppController {
 
 	function add($id = null) {
 		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid Answer', true));
-			$this->redirect(array('action'=>'index'));
+			$this->Session->setFlash(__('Invalid Question', true));
+			$this->redirect(array('controller'=>'questions','action'=>'index'));
+		}
+		// TODO need to check to make sure the user does not own the question
+		if (!$id) $id = $this->data['Answer']['question_id'];
+		if ($this->_owner($id, 'Question')) {
+			$this->Session->setFlash(__('Cannot answer your own Question', true));
+			$this->redirect(array('controller'=>'questions','action'=>'index'));
 		}
 		if (!empty($this->data)) {
 			$this->Answer->create();
@@ -41,6 +43,11 @@ class AnswersController extends AnswersAppController {
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid Answer', true));
 			$this->redirect(array('controller'=>'questions','action'=>'view',$this->data['Answer']['question_id']));
+		}
+		if (!$id) $id = $this->data['Answer']['question_id'];
+		if (!$this->_owner($id)) {
+			$this->Session->setFlash(__('This Answer does not belong to you', true));
+			$this->redirect(array('controller'=>'questions','action'=>'index'));
 		}
 		if (!empty($this->data)) {
 			if ($this->Answer->save($this->data)) {

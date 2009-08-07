@@ -20,7 +20,19 @@ class AnswersAppController extends AppController {
 		}
 		parent::beforeFilter();
 	}
-
+	
+	function _owner($id, $relatedModel = null) {
+		if ($relatedModel) {
+			$userId = $this->{$this->modelClass}->{$relatedModel}->field('user_id', array($relatedModel.'.id' => $id));
+		} else {
+			$userId = $this->{$this->modelClass}->field('user_id', array('id' => $id));	
+		}
+		if ($userId == $this->Auth->user('id')) {
+			$result = true;
+		} else {
+			$result = false;
+		}
+		return $result;
+	}
 }
-
 ?>
