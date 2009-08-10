@@ -52,12 +52,12 @@ class QuestionsController extends AnswersAppController {
 	function edit($id = null) {
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid Question', true));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action'=>'mine'));
 		}
 		if (!empty($this->data)) {
 			if ($this->Question->save($this->data)) {
 				$this->Session->setFlash(__('The Question has been saved', true));
-				$this->redirect(array('action'=>'index'));
+				$this->redirect(array('action'=>'mine'));
 			} else {
 				$this->Session->setFlash(__('The Question could not be saved. Please, try again.', true));
 			}
@@ -75,11 +75,11 @@ class QuestionsController extends AnswersAppController {
 	function delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Question', true));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action'=>'mine'));
 		}
 		if ($this->Question->del($id)) {
 			$this->Session->setFlash(__('Question deleted', true));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action'=>'mine'));
 		}
 	}
 	
@@ -103,7 +103,7 @@ class QuestionsController extends AnswersAppController {
 		$this->set('question', $this->Question->read(null, $id));
 	}
 
-	function admin_add() {
+	/*function admin_add() {
 		if (!empty($this->data)) {
 			$this->Question->create();
 			if ($this->Question->save($this->data)) {
@@ -141,7 +141,7 @@ class QuestionsController extends AnswersAppController {
 		$users = $this->Question->User->find('list');
 		$categories = $this->Question->Category->find('list');
 		$this->set(compact('tags','topics','users','categories'));
-	}
+	}*/
 
 	function admin_delete($id = null) {
 		if (!$id) {

@@ -8,7 +8,7 @@ class Tag extends AnswersAppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $hasAndBelongsToMany = array(
-		'Answers.Question' => array(
+		'Question' => array(
 			'className' => 'Answers.Question',
 			'joinTable' => 'questions_tags',
 			'foreignKey' => 'tag_id',

@@ -6,6 +6,7 @@ class Answer extends AnswersAppModel {
 		'answer' => array('notempty'),
 		'points' => array('numeric')
 	);
+	var $order = array('created DESC');
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $belongsTo = array(
@@ -15,8 +16,7 @@ class Answer extends AnswersAppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
-			'counterCache' => 'points',
-			'counterQuantity' => 'points',
+			'counterCache' => true,
 		),
 		'User' => array(
 			'className' => 'User',
@@ -24,8 +24,7 @@ class Answer extends AnswersAppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
-			'counterCache' => 'points',
-			'counterQuantity' => 'points',
+			'counterCache' => true,
 		)
 	);
 	
