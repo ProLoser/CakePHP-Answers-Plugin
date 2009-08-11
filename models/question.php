@@ -12,7 +12,6 @@ class Question extends AnswersAppModel {
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $hasOne = array(
 		'BestAnswer',
-		'StarQuestion',
 	);
 	
 	var $belongsTo = array(
@@ -78,6 +77,11 @@ class Question extends AnswersAppModel {
 			'finderQuery' => '',
 			'deleteQuery' => '',
 			'insertQuery' => ''
+		),
+		'FavoriteQuestion' => array(
+			'className' => 'User',
+			'joinTable' => 'favorite_questions',
+			'unique' => true,
 		)
 	);
 

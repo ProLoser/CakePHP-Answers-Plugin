@@ -5,7 +5,9 @@ class CategoriesController extends AnswersAppController {
 	var $helpers = array('Html', 'Form');
 
 	function index() {
-		$this->redirect(array('controller'=>'questions'));
+	//	$this->redirect(array('controller'=>'category'));
+		$this->Category->recursive = 0;
+		$this->set('categories', $this->paginate());
 	}
 
 	function view($id = null) {

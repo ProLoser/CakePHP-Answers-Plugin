@@ -12,6 +12,9 @@ foreach ($answers as $answer):
 			if (isset($size)) {
 				$options['size'] =  $size;
 			}
+			if (isset($owner) && $owner) {
+				$options['owner'] = true;
+			}
 			$options['answer'] = (isset($answer['Answer'])) ? array_merge($answer['Answer'], $answer) : $answer;
 			$options['plugin'] = 'answers';
 			echo $this->element('answers/answer', $options); 

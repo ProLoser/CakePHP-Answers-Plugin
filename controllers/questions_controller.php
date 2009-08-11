@@ -9,13 +9,16 @@ class QuestionsController extends AnswersAppController {
 	}
 	
 	function home() {
-		$this->Question->recursive = 2;
+		$this->Question->recursive = 0;
 		$this->set('questions', $this->paginate());
 	}
 
 	function index() {
-		$this->Question->recursive = 2;
-		$this->set('questions', $this->paginate());
+		$this->set('questions', $this->Question->find('all', array(
+			'contain' => array('User', 'Category', 'FavoriteQuestion' => array(
+				'conditions' => array('FavoriteQuestion.user_id' => $this->Auth->user('id'))
+			))
+		)));
 	}
 
 	function view($id = null) {
@@ -23,10 +26,15 @@ class QuestionsController extends AnswersAppController {
 			$this->Session->setFlash(__('Invalid Question.', true));
 			$this->redirect(array('action'=>'index'));
 		}
+		if ($this->_owner($id)) {
+			$this->set('owner', true);
+		} else {
+			$this->set('owner', false);
+		}
 		$this->set('question', $this->Question->find('first', array(
 			'conditions' => array('Question.id' => $id),
 			'contain' => array('User', 'Topic', 'Category', 'Answer' => array(
-				'User'
+				'User', 'BestAnswer',
 			))
 		)));
 	}
@@ -50,7 +58,7 @@ class QuestionsController extends AnswersAppController {
 	}
 
 	function edit($id = null) {
-		if (!$id && empty($this->data)) {
+		if (!$this->_owner($id) || !$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid Question', true));
 			$this->redirect(array('action'=>'mine'));
 		}
@@ -73,8 +81,8 @@ class QuestionsController extends AnswersAppController {
 	}
 
 	function delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Question', true));
+		if (!$id || !$this->_owner($id)) {
+			$this->Session->setFlash(__('Invalid id', true));
 			$this->redirect(array('action'=>'mine'));
 		}
 		if ($this->Question->del($id)) {

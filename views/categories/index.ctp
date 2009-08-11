@@ -48,7 +48,6 @@ foreach ($categories as $category):
 		<li><?php echo $html->link(__('New Category', true), array('action'=>'add')); ?></li>
 		<li><?php echo $html->link(__('List Questions', true), array('controller'=> 'questions', 'action'=>'index')); ?> </li>
 		<li><?php echo $html->link(__('New Question', true), array('controller'=> 'questions', 'action'=>'add')); ?> </li>
-		<li><?php echo $html->link(__('List Consultants', true), array('controller'=> 'consultants', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Consultant', true), array('controller'=> 'consultants', 'action'=>'add')); ?> </li>
+		<li><?php echo $html->link(__('List Consultants', true), array('plugin'=>null,'controller'=> 'consultants', 'action'=>'index')); ?> </li>
 	</ul>
 </div>

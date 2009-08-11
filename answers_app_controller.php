@@ -25,7 +25,7 @@ class AnswersAppController extends AppController {
 		if ($relatedModel) {
 			$userId = $this->{$this->modelClass}->{$relatedModel}->field('user_id', array($relatedModel.'.id' => $id));
 		} else {
-			$userId = $this->{$this->modelClass}->field('user_id', array('id' => $id));	
+			$userId = $this->{$this->modelClass}->field('user_id', array($this->modelClass.'.id' => $id));	
 		}
 		if ($userId == $this->Auth->user('id')) {
 			$result = true;
