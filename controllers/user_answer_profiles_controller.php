@@ -3,13 +3,37 @@ class UserAnswerProfilesController extends AnswersAppController {
 
 	var $name = 'UserAnswerProfiles';
 
-	function view() {
+	function beforeFilter() {
+		parent::beforeFilter();
+		$this->Auth->deny('index');
+	}
 	
+	function index(){
+		//$this->UserAnswerProfile->User->recursive=2;
+		$id = $this->Auth->user('id');	
+		$this->set('userAnswerProfile', $this->UserAnswerProfile->User->read(null, $id));
+	}
+	
+	function view() {
+		$this->_view($id);
 	}
 	
 	function edit() {
-	
+		$id = $this->Auth->user('id');
+		if (!empty($this->data)) {
+			if ($this->{$this->modelClass}->save($this->data)) {
+				$this->Session->setFlash(__("The {$this->modelClass} has been saved", true));
+				$this->redirect(array('action'=>'index'));
+			} else {
+				$this->Session->setFlash(__("The {$this->modelClass} could not be saved. Please, try again.", true));
+			}
+		}
+		if (empty($this->data)) {
+			$this->data = $this->UserAnswerProfile->User->read(null, $id);
+		}
 	}
-
+	function delete(){
+		$id = $this->Auth->user('id');
+	}
 }
 ?>

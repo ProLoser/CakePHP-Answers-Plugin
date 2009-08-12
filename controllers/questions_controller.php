@@ -20,6 +20,22 @@ class QuestionsController extends AnswersAppController {
 			))
 		)));
 	}
+	
+	function mine() {
+		$this->Question->recursive = 0;
+		$this->paginate['Question']['conditions'] = array('Question.user_id' => $this->Auth->user('id'));
+		$this->set('questions', $this->paginate());
+	}
+	
+	function favorites() {
+		$this->paginate = array(
+			'conditions' => array('FavoriteQuestion.user_id' => $this->Auth->user('id')),
+			'contain' => array(
+				'User', 'Category', 'FavoriteQuestion'
+			)
+		);
+		$this->set('questions', $this->paginate());
+	}
 
 	function view($id = null) {
 		if (!$id) {
@@ -89,12 +105,6 @@ class QuestionsController extends AnswersAppController {
 			$this->Session->setFlash(__('Question deleted', true));
 			$this->redirect(array('action'=>'mine'));
 		}
-	}
-	
-	function mine() {
-		$this->Question->recursive = 0;
-		$this->paginate['Question']['conditions'] = array('Question.user_id' => $this->Auth->user('id'));
-		$this->set('questions', $this->paginate());
 	}
 
 

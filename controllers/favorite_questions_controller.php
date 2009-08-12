@@ -3,6 +3,15 @@ class FavoriteQuestionsController extends AnswersAppController {
 
 	var $name = 'FavoriteQuestions';
 	
+	function index() {
+		$this->set('questions', $this->FavoriteQuestion->Question->find('all', array(
+			'conditions' => array('FavoriteQuestion.user_id' => $this->Auth->user('id')),
+			'contain' => array(
+				'User', 'Category', 'FavoriteQuestion'
+			)
+		)));
+	}
+	
 	function add($id = null) {
 		if ($id) {
 			$this->FavoriteQuestion->create();

@@ -1,5 +1,5 @@
-<div class="questions index">
-<h2><?php __('My Questions');?></h2>
+<div class="favoriteQuestions index">
+<h2><?php __('Favorite Questions');?></h2>
 <p>
 <?php
 echo $paginator->counter(array(
@@ -14,9 +14,9 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('Answers','answer_count');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
-<?php
+<?php debug($favoriteQuestions);
 $i = 0;
-foreach ($questions as $question):
+foreach ($favoriteQuestions as $question):
 	$class = null;
 	if ($i++ % 2 == 0) {
 		$class = ' class="altrow"';
@@ -36,9 +36,7 @@ foreach ($questions as $question):
 			<?php echo $question['Question']['answer_count']; ?>
 		</td>
 		<td class="actions">
-			<?php echo $html->link(__('View', true), array('action'=>'view', $question['Question']['id'])); ?>
-			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $question['Question']['id'])); ?>
-			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $question['Question']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $question['Question']['id'])); ?>
+			<?php echo $html->link(__('Delete', true), array('action'=>'delete', $question['FavoriteQuestion']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $question['FavoriteQuestion']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

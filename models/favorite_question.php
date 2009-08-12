@@ -2,6 +2,7 @@
 class FavoriteQuestion extends AppModel {
 
 	var $name = 'FavoriteQuestion';
+	
 	var $validate = array(
 		'question_id' => array('numeric'),
 		'user_id' => array('numeric')

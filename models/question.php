@@ -7,45 +7,29 @@ class Question extends AnswersAppModel {
 		'message' => array('notempty'),
 		'answer_count' => array('numeric')
 	);
-	var $actsAs = array('Containable');
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $hasOne = array(
-		'BestAnswer',
+		'BestAnswer' => array(
+			'className' => 'Answers.BestAnswer',
+		),
 	);
 	
 	var $belongsTo = array(
-		'User' => array(
-			'className' => 'User',
-			'foreignKey' => 'user_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
+		'User',
 		'Category' => array(
 			'className' => 'Answers.Category',
-			'foreignKey' => 'category_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
 		)
 	);
 
 	var $hasMany = array(
 		'Answer' => array(
 			'className' => 'Answers.Answer',
-			'foreignKey' => 'question_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
+			'dependent' => true,
 		),
-		'FavoriteQuestion',
+		'FavoriteQuestion' => array(
+			'dependent' => true,
+		),
 	);
 
 	var $hasAndBelongsToMany = array(

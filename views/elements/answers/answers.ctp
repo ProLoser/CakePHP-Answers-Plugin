@@ -12,13 +12,12 @@ foreach ($answers as $answer):
 			if (isset($size)) {
 				$options['size'] =  $size;
 			}
-			if (isset($owner) && $owner) {
-				$options['owner'] = true;
-			}
+			
 			$options['answer'] = (isset($answer['Answer'])) ? array_merge($answer['Answer'], $answer) : $answer;
 			$options['plugin'] = 'answers';
 			echo $this->element('answers/answer', $options); 
 		?>
+		<?php if (isset($owner) && $owner) echo $html->link('Make Best Answer', array('plugin'=>'answers','controller'=>'best_answers','action'=>'add',$answer['question_id'],$answer['id']), array('class'=>'best')); ?>
 	</li>
 <?php endforeach; ?>
 </ul>

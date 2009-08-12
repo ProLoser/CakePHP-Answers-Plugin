@@ -11,24 +11,11 @@ class Category extends AnswersAppModel {
 	var $hasMany = array(
 		'Question' => array(
 			'className' => 'Answers.Question',
-			'foreignKey' => 'category_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
 		)
 	);
 
 	var $hasAndBelongsToMany = array(
 		'Consultant' => array(
-			'unique' => true,
-		),
-		'Question' => array(
 			'unique' => true,
 		)
 	);

@@ -34,8 +34,7 @@ class BestAnswer extends AppModel {
 	);
 
 	function beforeSave() {
-		$this->deleteAll(array('id'=>$this->data['BestAnswer']['question_id']));
-		return true;
+		return $this->deleteAll(array('BestAnswer.question_id'=>$this->data['BestAnswer']['question_id']));
 	}
 
 }
