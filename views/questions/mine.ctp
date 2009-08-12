@@ -1,5 +1,5 @@
 <div class="questions index">
-<h2><?php __('Questions');?></h2>
+<h2><?php __('My Questions');?></h2>
 <p>
 <?php
 echo $paginator->counter(array(

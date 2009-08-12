@@ -1,7 +1,7 @@
 <h4>
-<?php echo (empty($question['FavoriteQuestion']['id'])) 
-	? $html->link('[Star]', array('plugin'=>'answers','controller'=>'questions','action'=>'star', $question['id']), array('class'=>'star')) 
-	: $html->link('[UnStar]', array('plugin'=>'answers','controller'=>'questions','action'=>'star', $question['id']), array('class'=>'unstar'));
+<?php echo (empty($question['FavoriteQuestion'])) 
+	? $html->link('[Star]', array('plugin'=>'answers','controller'=>'favorite_questions','action'=>'add', $question['id']), array('class'=>'star')) 
+	: $html->link('[UnStar]', array('plugin'=>'answers','controller'=>'favorite_questions','action'=>'delete', $question['FavoriteQuestion'][0]['id']), array('class'=>'unstar'));
 ?>
 	<?php echo $html->link($question['title'], array('controller'=>'questions','action'=>'view', $question['id'])); ?>
 </h4>

@@ -1,18 +1,19 @@
 <?php
-class UserAnswerProfile extends AppModel {
+class UserAnswerProfile extends AnswersAppModel {
 
 	var $name = 'UserAnswerProfile';
 	var $validate = array(
 		'user_id' => array('numeric'),
 		'avatar_option' => array('numeric'),
-		'email' => array('email'),
-		'show_link_profile' => array('numeric'),
-		'allow_contact' => array('numeric'),
-		'allow_fans' => array('numeric'),
-		'notify_question_answered' => array('numeric'),
-		'notify_friend_asks' => array('numeric'),
-		'notify_new_fan' => array('numeric'),
-		'subscribe_newsletter' => array('numeric')
+		'show_link_profile' => array('boolean'),
+		'allow_contact' => array('boolean'),
+		'allow_fans' => array('boolean'),
+		'notify_question_answered' => array('boolean'),
+		'notify_friend_asks' => array('boolean'),
+		'notify_new_fan' => array('boolean'),
+		'subscribe_newsletter' => array('boolean'),
+		'dob' => array('date'),
+		'is_public' => array('boolean')
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed

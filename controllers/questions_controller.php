@@ -50,7 +50,7 @@ class QuestionsController extends AnswersAppController {
 				$this->Session->setFlash(__('The Question could not be saved. Please, try again.', true));
 			}
 		}
-		$tags = $this->Question->Tag->find('list');
+		//$tags = $this->Question->Tag->find('list');
 		$topics = $this->Question->Topic->find('list');
 		$users = $this->Question->User->find('list');
 		$categories = $this->Question->Category->find('list');

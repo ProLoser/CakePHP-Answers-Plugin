@@ -44,7 +44,8 @@ class Question extends AnswersAppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
-		)
+		),
+		'FavoriteQuestion',
 	);
 
 	var $hasAndBelongsToMany = array(
@@ -78,11 +79,6 @@ class Question extends AnswersAppModel {
 			'deleteQuery' => '',
 			'insertQuery' => ''
 		),
-		'FavoriteQuestion' => array(
-			'className' => 'User',
-			'joinTable' => 'favorite_questions',
-			'unique' => true,
-		)
 	);
 
 }
