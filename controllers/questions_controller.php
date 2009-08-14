@@ -5,52 +5,48 @@ class QuestionsController extends AnswersAppController {
 	
 	function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->deny('mine');
+		$this->Auth->deny('mine','favorites');
 	}
 	
 	function home() {
-		$this->Question->recursive = 0;
-		$this->set('questions', $this->paginate());
-	}
-
-	function index() {
 		$this->set('questions', $this->Question->find('all', array(
 			'contain' => array('User', 'Category', 'FavoriteQuestion' => array(
 				'conditions' => array('FavoriteQuestion.user_id' => $this->Auth->user('id'))
 			))
 		)));
+		$this->set('consultants', $this->Question->User->Member->Consultant->find('all'));
+	}
+
+	function index() {
+		/* $this->set('questions', $this->Question->find('all', array(
+			'contain' => array('User', 'Category', 'FavoriteQuestion' => array(
+				'conditions' => array('FavoriteQuestion.user_id' => $this->Auth->user('id'))
+			))
+		))); */
+		$this->paginate['contain'] = array('User', 'Category', 'FavoriteQuestion' => array(
+			'conditions' => array('FavoriteQuestion.user_id' => $this->Auth->user('id'))
+		));
+		$this->set('questions', $this->paginate());
 	}
 	
 	function mine() {
 		$this->Question->recursive = 0;
-		$this->paginate['Question']['conditions'] = array('Question.user_id' => $this->Auth->user('id'));
-		$this->set('questions', $this->paginate());
-	}
-	
-	function favorites() {
-		$this->paginate = array(
-			'conditions' => array('FavoriteQuestion.user_id' => $this->Auth->user('id')),
-			'contain' => array(
-				'User', 'Category', 'FavoriteQuestion'
-			)
+		$this->paginate['conditions'] = array(
+			'Question.user_id' => $this->Auth->user('id')
 		);
 		$this->set('questions', $this->paginate());
 	}
+	
 
 	function view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid Question.', true));
 			$this->redirect(array('action'=>'index'));
 		}
-		if ($this->_owner($id)) {
-			$this->set('owner', true);
-		} else {
-			$this->set('owner', false);
-		}
 		$this->set('question', $this->Question->find('first', array(
 			'conditions' => array('Question.id' => $id),
-			'contain' => array('User', 'Topic', 'Category', 'Answer' => array(
-				'User', 'BestAnswer',
+			'contain' => array('User', 'Topic', 'Category', 'BestAnswer','Answer' => array(
+				'User'
 			))
 		)));
 	}

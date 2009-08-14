@@ -9,10 +9,10 @@
 <?php }else{ ?>
 	<?php $owner = true; ?>
 <?php } ?>
-	<?php echo $this->element('answers/answers', array('answers'=>$question['Answer'], 'owner'=>$owner)); ?>
+	<?php echo $this->element('answers/answers', array('answers'=>$question)); ?>
 </div>
 
-<?php 
+<?php
 if ($session->read('Auth.User.id') == $question['Question']['user_id']){
 	$actions['Edit Question'] 		=  array('action'=>'edit', $question['Question']['id']);
 	$actions['Delete Question'] 	= array('action'=>'delete', $question['Question']['id']);

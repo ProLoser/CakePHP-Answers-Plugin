@@ -28,6 +28,7 @@ class Question extends AnswersAppModel {
 			'dependent' => true,
 		),
 		'FavoriteQuestion' => array(
+			'className' => 'Answers.FavoriteQuestion',
 			'dependent' => true,
 		),
 	);

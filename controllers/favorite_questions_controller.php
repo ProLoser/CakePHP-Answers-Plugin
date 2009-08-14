@@ -4,10 +4,15 @@ class FavoriteQuestionsController extends AnswersAppController {
 	var $name = 'FavoriteQuestions';
 	
 	function index() {
-		$this->set('questions', $this->FavoriteQuestion->Question->find('all', array(
+		$this->set('questions', $this->FavoriteQuestion->find('all', array(
 			'conditions' => array('FavoriteQuestion.user_id' => $this->Auth->user('id')),
 			'contain' => array(
-				'User', 'Category', 'FavoriteQuestion'
+				'Question' => array(
+					'Category.id',
+					'Category.name',
+					'User.id',
+					'User.username', 
+				),
 			)
 		)));
 	}
@@ -19,23 +24,24 @@ class FavoriteQuestionsController extends AnswersAppController {
 			$this->data['FavoriteQuestion']['user_id'] = $this->Auth->user('id');
 			if ($this->FavoriteQuestion->save($this->data)) {
 				$this->Session->setFlash(__('The Question has been starred', true));
-			} else {
-				$this->Session->setFlash(__('The Question could not be starred. Please, try again.', true));
+				//$this->flash('The Question has been starred', $this->referer());
 			}
 		}
 		$this->redirect($this->referer());
 	}
 	
-	function delete($id = null) {
-		if ($id) {
+	function delete($questionId = null) {
+		if ($questionId) {
+			$id = $this->FavoriteQuestion->field('id', array(
+				'FavoriteQuestion.question_id' => $questionId,
+				'FavoriteQuestion.user_id' => $this->Auth->user('id')
+			));
 			if ($this->FavoriteQuestion->delete($id)) {
 				$this->Session->setFlash(__('The Question has been unstarred', true));
-			} else {
-				$this->Session->setFlash(__('The Question could not be unstarred. Please, try again.', true));
 			}
 		}
 		$this->redirect($this->referer());
 	}
-
+	
 }
 ?>

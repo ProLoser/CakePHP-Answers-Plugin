@@ -3,7 +3,7 @@ class BestAnswer extends AppModel {
 
 	var $name = 'BestAnswer';
 	var $validate = array(
-		'question_id' => array('numeric'),
+		'question_id' => array('isUnique'),
 		'answer_id' => array('numeric'),
 		'user_id' => array('numeric')
 	);

@@ -14,8 +14,14 @@ class UserAnswerProfilesController extends AnswersAppController {
 		$this->set('userAnswerProfile', $this->UserAnswerProfile->User->read(null, $id));
 	}
 	
-	function view() {
-		$this->_view($id);
+	function view($id = null) {
+		if (!$id) {
+			$this->Session->setFlash(__("Invalid User", true));
+			$this->redirect(array('action'=>'index'));
+		}
+		$this->set('userAnswerProfile', $this->UserAnswerProfile->find('first', array(
+			'conditions' => array('user_id' => $id)
+		)));
 	}
 	
 	function edit() {
@@ -33,7 +39,7 @@ class UserAnswerProfilesController extends AnswersAppController {
 		}
 	}
 	function delete(){
-		$id = $this->Auth->user('id');
+		//$id = $this->Auth->user('id');
 	}
 }
 ?>

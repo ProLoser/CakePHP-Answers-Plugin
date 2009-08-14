@@ -61,11 +61,6 @@
 			<?php echo $userAnswerProfile['UserAnswerProfile']['gender']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Dob'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $userAnswerProfile['UserAnswerProfile']['dob']; ?>
-			&nbsp;
-		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Is Public'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $userAnswerProfile['UserAnswerProfile']['is_public']; ?>

@@ -7,8 +7,7 @@
 		echo $form->input('title');
 		echo $form->input('details');
 		echo $form->input('category_id');
-		echo $form->input('Tag');
-		echo $form->input('Topic');
+		echo $form->input('Topic', array('type'=>'radio'));
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>

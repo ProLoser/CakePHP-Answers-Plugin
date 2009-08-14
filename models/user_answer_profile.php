@@ -3,7 +3,6 @@ class UserAnswerProfile extends AnswersAppModel {
 
 	var $name = 'UserAnswerProfile';
 	var $validate = array(
-		'user_id' => array('numeric'),
 		'avatar_option' => array('numeric'),
 		'show_link_profile' => array('boolean'),
 		'allow_contact' => array('boolean'),
@@ -12,7 +11,6 @@ class UserAnswerProfile extends AnswersAppModel {
 		'notify_friend_asks' => array('boolean'),
 		'notify_new_fan' => array('boolean'),
 		'subscribe_newsletter' => array('boolean'),
-		'dob' => array('date'),
 		'is_public' => array('boolean')
 	);
 
@@ -25,6 +23,11 @@ class UserAnswerProfile extends AnswersAppModel {
 			'fields' => '',
 			'order' => ''
 		)
+	);
+	
+	var $genders = array(
+		'Male' => 'Male',
+		'Female' => 'Female'
 	);
 
 }
