@@ -1,11 +1,18 @@
 <?php
-class PointEvent extends AppModel {
+class PointEvent extends AnswersAppModel {
 
 	var $name = 'PointEvent';
 	var $validate = array(
-		'code' => array('notempty'),
 		'description' => array('notempty'),
-		'points' => array('numeric')
+		'model' => array('notempty'),
+		'points' => array('numeric'),
+		'code' => array('alphanumeric'),
+	);
+	
+	var $hasMany = array(
+		'Point' => array(
+			'className' => 'Answers.Point',
+		)
 	);
 
 }

@@ -65,6 +65,19 @@ class Question extends AnswersAppModel {
 			'insertQuery' => ''
 		),
 	);
+	
+	function beforeSave() {
+		if ($this->User->UserLevel->checkLimitations('Question', $userId))) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function afterSave() {
+		$this->User->Point->event('askquestion', $userId, $this->id);
+	
+	}
 
 }
 ?>

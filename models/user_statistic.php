@@ -1,5 +1,5 @@
 <?php
-class UserStatistic extends AppModel {
+class UserStatistic extends AnswersAppModel {
 
 	var $name = 'UserStatistic';
 	var $validate = array(
@@ -16,6 +16,9 @@ class UserStatistic extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
+		),
+		'UserLevel' => array(
+			'className' => 'Answers.UserStatistic'
 		)
 	);
 

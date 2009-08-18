@@ -6,7 +6,7 @@ class Answer extends AnswersAppModel {
 		'answer' => array('notempty'),
 		'points' => array('numeric')
 	);
-	var $order = array('created DESC');
+	var $order = array('Answer.created DESC');
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $belongsTo = array(

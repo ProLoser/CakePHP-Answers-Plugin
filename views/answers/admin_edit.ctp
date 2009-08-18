@@ -7,7 +7,6 @@
 		echo $form->input('answer');
 		echo $form->input('question_id');
 		echo $form->input('user_id');
-		echo $form->input('points');
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>

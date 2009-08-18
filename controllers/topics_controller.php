@@ -13,7 +13,27 @@ class TopicsController extends AnswersAppController {
 			$this->Session->setFlash(__('Invalid Topic.', true));
 			$this->redirect(array('action'=>'index'));
 		}
-		$this->set('topic', $this->Topic->read(null, $id));
+		$this->set('topic', $this->Topic->find('first', array(
+			'conditions' => array('topic.id' => $id),
+			'contain' => array(
+				'Consultant'=> array(
+					'Member.first_name',
+					'Member.last_name',
+					'Member.id',
+					'Member.picture'
+				),
+				'Question' => array(
+					'Category.name',
+					'Category.id',
+					'User' => array(
+						'fields' => array(
+							'id',
+							'username'
+						),
+					),
+				),
+			)
+		)));
 	}
 
 	function add() {

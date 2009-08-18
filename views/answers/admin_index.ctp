@@ -14,7 +14,6 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('answer');?></th>
 	<th><?php echo $paginator->sort('question_id');?></th>
 	<th><?php echo $paginator->sort('user_id');?></th>
-	<th><?php echo $paginator->sort('points');?></th>
 	<th class="actions"><?php __('Actions');?></th>
 </tr>
 <?php
@@ -43,9 +42,6 @@ foreach ($answers as $answer):
 		</td>
 		<td>
 			<?php echo $html->link($answer['User']['id'], array('controller'=> 'users', 'action'=>'view', $answer['User']['id'])); ?>
-		</td>
-		<td>
-			<?php echo $answer['Answer']['points']; ?>
 		</td>
 		<td class="actions">
 			<?php echo $html->link(__('View', true), array('action'=>'view', $answer['Answer']['id'])); ?>

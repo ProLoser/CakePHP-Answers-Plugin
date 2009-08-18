@@ -31,11 +31,6 @@
 			<?php echo $html->link($answer['User']['id'], array('controller'=> 'users', 'action'=>'view', $answer['User']['id'])); ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Points'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $answer['Answer']['points']; ?>
-			&nbsp;
-		</dd>
 	</dl>
 </div>
 <div class="actions">

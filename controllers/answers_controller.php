@@ -16,7 +16,6 @@ class AnswersController extends AnswersAppController {
 			$this->Session->setFlash(__('Invalid Question', true));
 			$this->redirect(array('controller'=>'questions','action'=>'index'));
 		}
-		// TODO need to check to make sure the user does not own the question
 		if (!$id) $id = $this->data['Answer']['question_id'];
 		if ($this->_owner($id, 'Question')) {
 			$this->Session->setFlash(__('Cannot answer your own Question', true));
