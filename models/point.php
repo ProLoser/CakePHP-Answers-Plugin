@@ -21,27 +21,27 @@ class Point extends AnswersAppModel {
 	// Action checks (login once per day, 50 thumb up max, register) should be performed in the controller actions only
 	// Model is stored in POINT EVENT DEFINITION
 	// model_foreign_key is used in conjunction to show which record from the related model caused the points
-	function event($code, $userId, $foreignKey = null) {
-		// Figure out which point event we're using
-		$event = $this->PointEvent->find('first', array('conditions' => array(
-			'PointEvent.code' => $code
-		)));
-		
-		// Check the point event to see if the user has permission to continue gaining points
-		if () {
-			// Trigger the creation of the points record
-			if ($response = $this->assign($code, $foreignKey, $userId)){
-				return $response;
-			} else {
-				return 'There was an error assigning the points';
-			}
-		} else {
-			return 'Your level has met it\' maximum quota for the day. Please try again tomorrow';
-		}
-	}
 	
 	function assign($code, $userId, $foreignKey = null) {
-		
+		if (!$event = $this->PointEvent->find('first', array(
+			'recursive' => -1, 
+			'conditions' => array('PointEvent.code' => $code))
+		)) {
+			return false;
+		}
+		$data['Point'] = array(
+			'point_event_id' => $event['Event']['id'],
+			'user_id' => $userId,
+			'points' => $event['Event']['points'],
+		);
+		if ($foreignKey) {
+			$data['Point']['model_foreign_key'] = $foreignKey;
+		}
+		if ($this->save($data)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

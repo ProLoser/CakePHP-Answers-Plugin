@@ -75,6 +75,7 @@ class QuestionsController extends AnswersAppController {
 			$this->redirect(array('action'=>'mine'));
 		}
 		if (!empty($this->data)) {
+			$this->data['Question']['user_id'] = $this->Auth->user('id');
 			if ($this->Question->save($this->data)) {
 				$this->Session->setFlash(__('The Question has been saved', true));
 				$this->redirect(array('action'=>'mine'));

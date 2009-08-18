@@ -18,7 +18,7 @@ class UserStatistic extends AnswersAppModel {
 			'order' => ''
 		),
 		'UserLevel' => array(
-			'className' => 'Answers.UserStatistic'
+			'className' => 'Answers.UserLevel'
 		)
 	);
 

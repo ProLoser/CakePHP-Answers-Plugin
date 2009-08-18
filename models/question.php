@@ -67,16 +67,13 @@ class Question extends AnswersAppModel {
 	);
 	
 	function beforeSave() {
-		if ($this->User->UserLevel->checkLimitations('Question', $userId))) {
-			return true;
-		} else {
-			return false;
-		}
+		return $this->User->UserStatistic->UserLevel->checkLimit('Question', $this->data['Question']['user_id']);
 	}
 	
-	function afterSave() {
-		$this->User->Point->event('askquestion', $userId, $this->id);
-	
+	function afterSave($created) {
+		if ($created) {
+			$this->User->Point->assign('askquestion', $this->data['Question']['user_id'], $this->id);
+		}
 	}
 
 }
