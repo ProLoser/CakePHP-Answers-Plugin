@@ -66,15 +66,31 @@ class Question extends AnswersAppModel {
 		),
 	);
 	
+	var $actsAs = array(
+		'Answers.AnswersInstaller' /*=> array(
+			//'userModel' => true,
+			// Triggers is used to install automatic point calculations
+			'triggers' => array(
+				'addquestion' => array(
+					// Action refers to which CRUD action should trigger
+					// default action is set to create
+					'action' => 'create',
+					// Perform a limit check in the before(Save, Delete, Find) trigger
+					'check' => true,
+				),
+				
+			),
+		)*/
+	);
+	
 	function beforeSave() {
-		return $this->User->UserStatistic->UserLevel->checkLimit('Question', $this->data['Question']['user_id']);
+		//return $this->checkLimit($model, $userId);
+		return $this->checkLimit('Question', $this->data['Question']['user_id']);
 	}
 	
 	function afterSave($created) {
-		if ($created) {
-			$this->User->Point->assign('askquestion', $this->data['Question']['user_id'], $this->id);
-		}
+		//$this->assignPoints($code, $userId, $foreignKey = null);
+		$this->assignPoints('addquestion', $this->data['Question']['user_id'], $this->id);
 	}
-
 }
 ?>

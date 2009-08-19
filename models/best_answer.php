@@ -7,6 +7,9 @@ class BestAnswer extends AppModel {
 		'answer_id' => array('numeric'),
 		'user_id' => array('numeric')
 	);
+	var $actsAs = array(
+		'AnswersInstaller'
+	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $belongsTo = array(

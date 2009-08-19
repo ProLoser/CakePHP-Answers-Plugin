@@ -17,32 +17,6 @@ class Point extends AnswersAppModel {
 			'className' => 'Answers.PointEvent',
 		)
 	);
-	
-	// Action checks (login once per day, 50 thumb up max, register) should be performed in the controller actions only
-	// Model is stored in POINT EVENT DEFINITION
-	// model_foreign_key is used in conjunction to show which record from the related model caused the points
-	
-	function assign($code, $userId, $foreignKey = null) {
-		if (!$event = $this->PointEvent->find('first', array(
-			'recursive' => -1, 
-			'conditions' => array('PointEvent.code' => $code))
-		)) {
-			return false;
-		}
-		$data['Point'] = array(
-			'point_event_id' => $event['Event']['id'],
-			'user_id' => $userId,
-			'points' => $event['Event']['points'],
-		);
-		if ($foreignKey) {
-			$data['Point']['model_foreign_key'] = $foreignKey;
-		}
-		if ($this->save($data)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 
 }
 ?>
