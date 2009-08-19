@@ -35,51 +35,51 @@
  */
 class AnswersInstallerBehavior extends ModelBehavior {
 
-/**
- * Errors
- *
- * @var array
- */
+	/**
+	 * Errors
+	 *
+	 * @var array
+	 */
 	var $errors = array();
-/**
- * Defaults
- *
- * @var array
- * @access protected
- */
+	/**
+	 * Defaults
+	 *
+	 * @var array
+	 * @access protected
+	 */
 	var $_defaults = array();
-/**
- * User Model
- *
- * @var array
- * @access protected
- */
+	/**
+	 * User Model
+	 *
+	 * @var array
+	 * @access protected
+	 */
 	var $userModel = false;
 	
-/**
- * User Model
- *
- * @var array
- * @access protected
- */
+	/**
+	 * User Model
+	 *
+	 * @var array
+	 * @access protected
+	 */
 	var $User = null;
 	
-/**
- * User Model
- *
- * @var array
- * @access protected
- */
+	/**
+	 * User Model
+	 *
+	 * @var array
+	 * @access protected
+	 */
 	var $triggers = array();
 
-/**
- * Initiate Tree behavior
- *
- * @param object $Model instance of model
- * @param array $fields array of configuration settings.
- * @return void
- * @access public
- */
+	/**
+	 * Initiate Tree behavior
+	 *
+	 * @param object $Model instance of model
+	 * @param array $fields array of configuration settings.
+	 * @return void
+	 * @access public
+	 */
 	function setup(&$Model, $settings) {
 		if (isset($settings['userModel']) && $settings['userModel']) {
 			$this->userModel = $Model->alias;
@@ -94,14 +94,14 @@ class AnswersInstallerBehavior extends ModelBehavior {
 		}
 	}
 	
-/**
- * Initiate Tree behavior
- *
- * @param object $Model instance of model
- * @param array $fields array of configuration settings.
- * @return void
- * @access public
- */
+	/**
+	 * Initiate Tree behavior
+	 *
+	 * @param object $Model instance of model
+	 * @param array $fields array of configuration settings.
+	 * @return void
+	 * @access public
+	 */
 	function afterSave(&$Model, $created) {
 		if ($created) {
 			// If a new user registered, create related profiles
@@ -123,16 +123,16 @@ class AnswersInstallerBehavior extends ModelBehavior {
 		}
 	}
 	
-/**
- * Check the limits of the target user to see if they are allowed to post more content
- *
- * Action checks (login once per day, 50 thumb up max, register) should be performed in the controller actions only
- *
- * @param object $Model instance of model
- * @param array $fields array of configuration settings.
- * @return void
- * @access public
- */
+	/**
+	 * Check the limits of the target user to see if they are allowed to post more content
+	 *
+	 * Action checks (login once per day, 50 thumb up max, register) should be performed in the controller actions only
+	 *
+	 * @param object $Model instance of model
+	 * @param array $fields array of configuration settings.
+	 * @return void
+	 * @access public
+	 */
 	function checkLimit($targetModel, $userId) {
 		$userLevel = $this->User->UserStatistic->find('first', array(
 			'conditions'=>array(
@@ -151,16 +151,16 @@ class AnswersInstallerBehavior extends ModelBehavior {
 		return ($count < $userLevel['UserLevel'][Inflector::underscore($model).'_limit']);
 	}
 	
-/**
- * Assign points from the point event to the target user
- *
- * model_foreign_key is used in conjunction to show which record from the related model caused the points
- *
- * @param object $Model instance of model
- * @param array $fields array of configuration settings.
- * @return void
- * @access public
- */
+	/**
+	 * Assign points from the point event to the target user
+	 *
+	 * model_foreign_key is used in conjunction to show which record from the related model caused the points
+	 *
+	 * @param object $Model instance of model
+	 * @param array $fields array of configuration settings.
+	 * @return void
+	 * @access public
+	 */
 	function assignPoints($code, $userId, $foreignKey = null) {
 		if (!$event = $this->User->Point->PointEvent->find('first', array(
 			'recursive' => -1, 
@@ -184,12 +184,12 @@ class AnswersInstallerBehavior extends ModelBehavior {
 		}
 	}
 	
-/**
- * Bind all related models in the plugin to the User model
- *
- * @return boolean success
- * @access public
- */
+	/**
+	 * Bind all related models in the plugin to the User model
+	 *
+	 * @return boolean success
+	 * @access public
+	 */
 	function bindUserRelationships(&$Model) {
 		$success = $Model->bindModel(array(
 			'hasMany'=> array(
