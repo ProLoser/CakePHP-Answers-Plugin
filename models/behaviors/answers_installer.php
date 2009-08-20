@@ -62,15 +62,28 @@ class AnswersInstallerBehavior extends ModelBehavior {
  * @var array
  * @access protected
  */
-	var $User = null;
-	
+	var $triggers = array();
+
 /**
  * User Model
  *
  * @var array
  * @access protected
- */
-	var $triggers = array();
+ */	
+	var $relationships = array(
+		'hasMany'=> array(
+			'Answer' => array('className' => 'Answers.Answer'),				
+			'Question'=> array('className' => 'Answers.Question'),
+			'BestAnswer'=> array('className' => 'Answers.BestAnswer'),
+			'Report'=> array('className' => 'Answers.Report'),
+			'Point'=> array('className' => 'Answers.Point'),
+			'FavoriteQuestion'=> array('className' => 'Answers.FavoriteQuestion')
+		),
+		'hasOne' => array(
+			'UserAnswerProfile'=> array('className' => 'Answers.UserAnswerProfile'),
+			'UserStatistic'=> array('className' => 'Answers.UserStatistic')
+		)
+	);
 
 /**
  * Initiate Tree behavior
@@ -82,14 +95,9 @@ class AnswersInstallerBehavior extends ModelBehavior {
  */
 	function setup(&$Model, $settings) {
 		if (isset($settings['userModel']) && $settings['userModel']) {
-			$this->userModel = $Model->alias;
-			// Store the user model reference
-			$this->User = $Model;
-			$this->bindUserRelationships($Model);
+			$this->_bindUserRelationships($Model);
 		}
 		if (isset($settings['triggers']) && $settings['triggers']) {
-			// Store a newly registered user model
-			$this->User = ClassRegistry::init('User');;
 			$this->triggers = $settings['triggers'];
 		}
 	}
@@ -103,23 +111,16 @@ class AnswersInstallerBehavior extends ModelBehavior {
  * @access public
  */
 	function afterSave(&$Model, $created) {
-		if ($created) {
-			// If a new user registered, create related profiles
-			if ($this->userModel) {
-			
-				if (!isset($this->data['UserAnswerProfile']) || empty($this->data['UserAnswerProfile'])) {
-					$data['UserAnswerProfile']['user_id'] = $Model->id;
-					$Model->UserAnswerProfile->save($data);
-				}
-				if (!isset($this->data['UserStatistic']) || empty($this->data['UserStatistic'])) {
-					$data['UserStatistic']['user_id'] = $Model->id;
-					$Model->UserStatistic->save($data);
-				}
+		// If a new user registered, create related profiles
+		if ($created && $this->userModel) {
+			if (!isset($this->data['UserAnswerProfile']) || empty($this->data['UserAnswerProfile'])) {
+				$data['UserAnswerProfile']['user_id'] = $Model->id;
+				$Model->UserAnswerProfile->save($data);
 			}
-			
-			
-			
-			
+			if (!isset($this->data['UserStatistic']) || empty($this->data['UserStatistic'])) {
+				$data['UserStatistic']['user_id'] = $Model->id;
+				$Model->UserStatistic->save($data);
+			}
 		}
 	}
 	
@@ -130,11 +131,12 @@ class AnswersInstallerBehavior extends ModelBehavior {
  *
  * @param object $Model instance of model
  * @param array $fields array of configuration settings.
- * @return void
+ * @return boolean
  * @access public
  */
-	function checkLimit($targetModel, $userId) {
-		$userLevel = $this->User->UserStatistic->find('first', array(
+	function isUnderLimit(&$Model, $data) {
+		$userId = (is_array($data)) ? $data['user_id'] : $data;
+		$userLevel = $Model->User->UserStatistic->find('first', array(
 			'conditions'=>array(
 				'UserStatistic.user_id' => $userId,
 			),
@@ -143,16 +145,16 @@ class AnswersInstallerBehavior extends ModelBehavior {
 			)
 		));
 		
-		$count = $this->User->{$targetModel}->find('count', array('conditions'=>array(
-			$targetModel.'.user_id' => $userId,
-			$targetModel.'.created > ' => date('Y-m-d g:i:s', strtotime('-1 day'))
+		$count = $Model->find('count', array('conditions'=>array(
+			$Model->alias.'.user_id' => $userId,
+			$Model->alias.'.created > ' => date('Y-m-d g:i:s', strtotime('-1 day'))
 		)));
 		
-		return ($count < $userLevel['UserLevel'][Inflector::underscore($model).'_limit']);
+		return ($count < $userLevel['UserLevel'][Inflector::underscore($Model->alias).'_limit']);
 	}
 	
 /**
- * Assign points from the point event to the target user
+ * Add points from the point event to the target user
  *
  * model_foreign_key is used in conjunction to show which record from the related model caused the points
  *
@@ -161,27 +163,53 @@ class AnswersInstallerBehavior extends ModelBehavior {
  * @return void
  * @access public
  */
-	function assignPoints($code, $userId, $foreignKey = null) {
-		if (!$event = $this->User->Point->PointEvent->find('first', array(
-			'recursive' => -1, 
+	function assignPoints(&$Model, $code, $userId, $foreignKey = null) {
+		
+		if (!$event = $Model->User->Point->PointEvent->find('first', array(
+			'fields' => array('id', 'points'),
+			'recursive' => -1,
 			'conditions' => array('PointEvent.code' => $code))
 		)) {
 			return false;
 		}
-		debug($event);die;
+		
 		$data['Point'] = array(
-			'point_event_id' => $event['Event']['id'],
+			'point_event_id' => $event['PointEvent']['id'],
 			'user_id' => $userId,
-			'points' => $event['Event']['points'],
+			'points' => $event['PointEvent']['points'],
 		);
 		if ($foreignKey) {
 			$data['Point']['model_foreign_key'] = $foreignKey;
 		}
-		if ($this->User->Point->save($data)) {
-			return true;
-		} else {
+		
+		$success = $Model->User->Point->save($data);
+		
+		return $success;
+	}
+
+/**
+ * Remove points from the point event to the target user
+ *
+ * model_foreign_key is used in conjunction to show which record from the related model caused the points
+ *
+ * @param object $Model instance of model
+ * @param array $fields array of configuration settings.
+ * @return void
+ * @access public
+ */
+	function removePoints(&$Model, $code, $foreignKey) {
+		if (!$event = $Model->User->Point->PointEvent->find('first', array(
+			'fields' => array('id'),
+			'conditions' => array('PointEvent.code' => $code))
+		)) {
 			return false;
 		}
+		
+		$success = $this->User->Point->deleteAll(array(
+			'point_event_id' => $event['PointEvent']['id'],
+			'model_foreign_key' => $foreignKey,
+		));
+		return $success;
 	}
 	
 /**
@@ -190,21 +218,8 @@ class AnswersInstallerBehavior extends ModelBehavior {
  * @return boolean success
  * @access public
  */
-	function bindUserRelationships(&$Model) {
-		$success = $Model->bindModel(array(
-			'hasMany'=> array(
-				'Answer' => array('className' => 'Answers.Answer'),				
-				'Question'=> array('className' => 'Answers.Question'),
-				'BestAnswer'=> array('className' => 'Answers.BestAnswer'),
-				'Report'=> array('className' => 'Answers.Report'),
-				'Point'=> array('className' => 'Answers.Point'),
-				'FavoriteQuestion'=> array('className' => 'Answers.FavoriteQuestion')
-			),
-			'hasOne' => array(
-				'UserAnswerProfile'=> array('className' => 'Answers.UserAnswerProfile'),
-				'UserStatistic'=> array('className' => 'Answers.UserStatistic')
-			)
-		));
+	function _bindUserRelationships(&$Model) {
+		$success = $Model->bindModel($this->relationships, false);
 		
 		return $success;
 	}

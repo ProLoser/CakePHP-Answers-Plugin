@@ -17,6 +17,18 @@ class Point extends AnswersAppModel {
 			'className' => 'Answers.PointEvent',
 		)
 	);
+	
+	function afterSave($created) {
+		if ($created) {
+			// @TODO update user statistics profile after save
+			
+			$this->User->UserStatistics->();
+		}
+	}
+	
+	function beforeDelete() {
+		
+	}
 
 }
 ?>

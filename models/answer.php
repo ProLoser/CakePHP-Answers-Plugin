@@ -3,8 +3,10 @@ class Answer extends AnswersAppModel {
 
 	var $name = 'Answer';
 	var $validate = array(
-		'answer' => array('notempty'),
-		'points' => array('numeric')
+		'answer' => array('notEmpty'),
+		'user_id' => array(
+			'You have reached the maximum number of answers allowed per day' => 'isUnderLimit'
+		),
 	);
 	var $order = array('Answer.created DESC');
 
@@ -28,9 +30,16 @@ class Answer extends AnswersAppModel {
 		)
 	);
 	
+	var $actsAs = array(
+		'AnswersInstaller'
+	);
+	
 	var $hasOne = array(
 		'BestAnswer',
 	);
-
+	
+	function afterSave($created) {
+		$this->assignPoints('answer', $this->data['Answer']['user_id'], $this->id);
+	}
 }
 ?>

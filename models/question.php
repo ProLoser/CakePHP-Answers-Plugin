@@ -5,7 +5,10 @@ class Question extends AnswersAppModel {
 	var $validate = array(
 		'subject' => array('notempty'),
 		'message' => array('notempty'),
-		'answer_count' => array('numeric')
+		'answer_count' => array('numeric'),
+		'user_id' => array(
+			'You have reached the maximum number of answers allowed per day' => 'isUnderLimit'
+		),
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -83,14 +86,12 @@ class Question extends AnswersAppModel {
 		)*/
 	);
 	
-	function beforeSave() {
-		//return $this->checkLimit($model, $userId);
-		return $this->checkLimit('Question', $this->data['Question']['user_id']);
+	function afterSave($created) {
+		$this->assignPoints('addquestion', $this->data['Question']['user_id'], $this->id);
 	}
 	
-	function afterSave($created) {
-		//$this->assignPoints($code, $userId, $foreignKey = null);
-		$this->assignPoints('addquestion', $this->data['Question']['user_id'], $this->id);
+	function beforeDelete() {
+		$this->removePoints('addquestion', $this->id);
 	}
 }
 ?>

@@ -2,7 +2,7 @@
 class QuestionsController extends AnswersAppController {
 
 	var $name = 'Questions';
-	
+
 	function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->deny('mine','favorites');
@@ -52,6 +52,11 @@ class QuestionsController extends AnswersAppController {
 	}
 
 	function add() {
+		if (!$this->Question->isUnderLimit($this->Auth->user('id'))) {
+			$this->Session->setFlash(__('You have reached the maximum number of questions allowed today.', true));
+			$this->redirect(array('action'=>'index'));
+		}
+	
 		if (!empty($this->data)) {
 			$this->Question->create();
 			$this->data['Question']['user_id'] = $this->Auth->user('id');

@@ -2,6 +2,11 @@
 class FavoriteQuestion extends AppModel {
 
 	var $name = 'FavoriteQuestion';
+	var $validate = array(
+		'user_id' => array(
+			'You have reached the maximum number of answers allowed per day' => 'isUnderLimit'
+		),
+	);
 	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $belongsTo = array(
@@ -11,15 +16,16 @@ class FavoriteQuestion extends AppModel {
 		'User'
 	);
 	
-	function beforeSave() {
-		$data['FavoriteQuestion.question_id'] = $this->data['FavoriteQuestion']['question_id'];
-		$data['FavoriteQuestion.user_id'] = $this->data['FavoriteQuestion']['user_id'];
-		if ($this->find('all', array('conditions'=>$data))) {
-			return false;
-		} else {
-			return true;
-		}
+	var $actsAs = array(
+		'AnswersInstaller'
+	);
+/*	
+	function afterSave() {
+		$this->assignPoints('addanswer', $this->data['Answer']['user_id'], $this->id);
 	}
-
+	function  afterDelete() {
+		echo $this->id;
+	}
+*/
 }
 ?>

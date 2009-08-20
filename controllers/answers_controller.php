@@ -10,17 +10,28 @@ class AnswersController extends AnswersAppController {
 		}
 		$this->set('answer', $this->Answer->read(null, $id));
 	}
-
+	function index(){
+		$this->redirect(array('controller'=>'questions','action'=>'index'));
+	}
+	
 	function add($id = null) {
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid Question', true));
 			$this->redirect(array('controller'=>'questions','action'=>'index'));
 		}
+	
 		if (!$id) $id = $this->data['Answer']['question_id'];
+
 		if ($this->_owner($id, 'Question')) {
 			$this->Session->setFlash(__('Cannot answer your own Question', true));
 			$this->redirect(array('controller'=>'questions','action'=>'index'));
 		}
+		
+		if (!$this->Answer->isUnderLimit($this->Auth->user('id'))) {
+			$this->Session->setFlash(__('You have reached the maximum number of answers allowed today.', true));
+			$this->redirect(array('controller'=>'questions','action'=>'view', $id));
+		}
+		
 		if (!empty($this->data)) {
 			$this->Answer->create();
 			$this->data['Answer']['user_id'] = $this->Auth->user('id');
@@ -31,6 +42,7 @@ class AnswersController extends AnswersAppController {
 				$this->Session->setFlash(__('The Answer could not be saved. Please, try again.', true));
 			}
 		}
+		
 		if (empty($this->data)) {
 			$this->data['Answer']['question_id'] = $id;
 		}

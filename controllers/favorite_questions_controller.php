@@ -19,6 +19,12 @@ class FavoriteQuestionsController extends AnswersAppController {
 	
 	function add($id = null) {
 		if ($id) {
+			if (!$this->FavoriteQuestion->isUnderLimit($this->Auth->user('id'))) {
+				$this->Session->setFlash(__('You have reached the maximum number of favorite questions.', true));
+				$this->redirect(array('controller'=>'questions','action'=>'index'));
+			}
+	
+		
 			$this->FavoriteQuestion->create();
 			$this->data['FavoriteQuestion']['question_id'] = $id;
 			$this->data['FavoriteQuestion']['user_id'] = $this->Auth->user('id');

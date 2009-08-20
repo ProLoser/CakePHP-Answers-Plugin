@@ -5,6 +5,7 @@
 		<fieldset>
 			<legend><?php __('Add Answer');?></legend>
 		<?php
+			echo $form->error('user_id');
 			echo $form->input('answer');
 			echo $form->input('question_id', array('type'=>'hidden'));
 		?>
