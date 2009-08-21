@@ -19,15 +19,16 @@ class Point extends AnswersAppModel {
 	);
 	
 	function afterSave($created) {
-		if ($created) {
-			// @TODO update user statistics profile after save
-			
-			$this->User->UserStatistics->();
+		if ($created) {			
+			$this->User->UserStatistic->updateAll(
+				array('UserStatistic.points' => 'UserStatistic.points + '.$this->data['Point']['points']), 
+				array('UserStatistic.user_id' => $this->id)
+			);
 		}
 	}
 	
-	function beforeDelete() {
 		
+	function beforeDelete() {
 	}
 
 }

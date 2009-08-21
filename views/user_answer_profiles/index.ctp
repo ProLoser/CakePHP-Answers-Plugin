@@ -79,11 +79,6 @@
 	</dl>
 </div>
 
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('Edit My Online Profile', true), array('action'=>'edit', $userAnswerProfile['UserAnswerProfile']['id'])); ?> </li>
-	</ul>
-</div>
 <div class="userAnswerProfiles view">
 <h2><?php  __('My Personal Profile');?></h2>
 	<dl><?php $i = 0; $class = ' class="altrow"';?>
@@ -116,11 +111,6 @@
 	</dl>
 </div>
 
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('Edit My Personal Profile', true), array('action'=>'edit', $userAnswerProfile['UserAnswerProfile']['id'])); ?> </li>
-	</ul>
-</div>
 <div class="userAnswerProfiles view">
 <h2><?php  __('My Member Profile');?></h2>
 	<dl><?php $i = 0; $class = ' class="altrow"';?>
@@ -247,13 +237,13 @@
 	</dl>
 </div>
 
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('Edit My Member Profile', true), array('action'=>'edit', $userAnswerProfile['UserAnswerProfile']['id'])); ?> </li>
-	</ul>
-
-</div><div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('Close My Account', true), array('action'=>'delete', $userAnswerProfile['UserAnswerProfile']['id'])); ?> </li>
-	</ul>
-</div>
+<?php $actions = array(
+	'Edit Account' => array('plugin'=>null,'controller'=>'users','action'=>'edit', $userAnswerProfile['User']['id']),
+	'Edit Information' => array('action'=>'edit', $userAnswerProfile['Member']['id']),
+	'Edit Settings' => array('plugin'=>null,'controller'=>'members','action'=>'edit', $userAnswerProfile['UserAnswerProfile']['id']),
+	'Close Account' => array('plugin'=>null,'controller'=>'users','action'=>'delete', $userAnswerProfile['User']['id']),
+); 
+if (!empty($userAnswerProfile['Member']['Consultant']['id'])) {
+	$actions['Edit Consultant'] = array('controller'=>'consultants','action'=>'edit', $userAnswerProfile['Member']['Consultant']['id']);
+} 
+$this->set('actions', $actions); ?>

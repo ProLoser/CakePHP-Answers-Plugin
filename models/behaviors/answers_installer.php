@@ -75,13 +75,28 @@ class AnswersInstallerBehavior extends ModelBehavior {
 			'Answer' => array('className' => 'Answers.Answer'),				
 			'Question'=> array('className' => 'Answers.Question'),
 			'BestAnswer'=> array('className' => 'Answers.BestAnswer'),
-			'Report'=> array('className' => 'Answers.Report'),
-			'Point'=> array('className' => 'Answers.Point'),
-			'FavoriteQuestion'=> array('className' => 'Answers.FavoriteQuestion')
+			'Report'=> array(
+				'className' => 'Answers.Report',
+				'dependent' => true
+			),
+			'Point'=> array(
+				'className' => 'Answers.Point',
+				'dependent' => true
+			),
+			'FavoriteQuestion'=> array(
+				'className' => 'Answers.FavoriteQuestion',
+				'dependent' => true
+			)
 		),
 		'hasOne' => array(
-			'UserAnswerProfile'=> array('className' => 'Answers.UserAnswerProfile'),
-			'UserStatistic'=> array('className' => 'Answers.UserStatistic')
+			'UserAnswerProfile'=> array(
+				'className' => 'Answers.UserAnswerProfile',
+				'dependent' => true
+			),
+			'UserStatistic'=> array(
+				'className' => 'Answers.UserStatistic',
+				'dependent' => true
+			)
 		)
 	);
 
@@ -95,6 +110,7 @@ class AnswersInstallerBehavior extends ModelBehavior {
  */
 	function setup(&$Model, $settings) {
 		if (isset($settings['userModel']) && $settings['userModel']) {
+			$this->userModel = true;
 			$this->_bindUserRelationships($Model);
 		}
 		if (isset($settings['triggers']) && $settings['triggers']) {
@@ -111,8 +127,9 @@ class AnswersInstallerBehavior extends ModelBehavior {
  * @access public
  */
 	function afterSave(&$Model, $created) {
-		// If a new user registered, create related profiles
-		if ($created && $this->userModel) {
+		
+		if ($this->userModel && $created) {
+			// If a new user registered, create related profiles
 			if (!isset($this->data['UserAnswerProfile']) || empty($this->data['UserAnswerProfile'])) {
 				$data['UserAnswerProfile']['user_id'] = $Model->id;
 				$Model->UserAnswerProfile->save($data);
@@ -121,6 +138,8 @@ class AnswersInstallerBehavior extends ModelBehavior {
 				$data['UserStatistic']['user_id'] = $Model->id;
 				$Model->UserStatistic->save($data);
 			}
+			// Give user registration points
+			$Model->assignPoints('register', $Model->id, $Model->id);
 		}
 	}
 	
@@ -164,6 +183,10 @@ class AnswersInstallerBehavior extends ModelBehavior {
  * @access public
  */
 	function assignPoints(&$Model, $code, $userId, $foreignKey = null) {
+		// If the current model is a user model, displace the loaded model instance so following code works
+		if ($this->userModel) {
+			$Model = $Model->Point;
+		}
 		
 		if (!$event = $Model->User->Point->PointEvent->find('first', array(
 			'fields' => array('id', 'points'),
@@ -178,9 +201,8 @@ class AnswersInstallerBehavior extends ModelBehavior {
 			'user_id' => $userId,
 			'points' => $event['PointEvent']['points'],
 		);
-		if ($foreignKey) {
-			$data['Point']['model_foreign_key'] = $foreignKey;
-		}
+		
+		$data['Point']['model_foreign_key'] = $foreignKey;
 		
 		$success = $Model->User->Point->save($data);
 		

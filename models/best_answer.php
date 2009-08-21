@@ -26,18 +26,18 @@ class BestAnswer extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		),
-		'User' => array(
-			'className' => 'User',
-			'foreignKey' => 'user_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
 		)
 	);
 	
 	function beforeSave() {
-		return $this->deleteAll(array('BestAnswer.question_id'=>$this->data['BestAnswer']['question_id']));
+		$questionUserId = $this->Question->field('user_id', array('question_id' => this->data['BestAnswer']['question_id']));
+		$answerUserId = $this->Answer->field('user_id', array('answer_id' => this->data['BestAnswer']['answer_id']));
+		$success = (
+			$this->deleteAll(array('BestAnswer.question_id'=>$this->data['BestAnswer']['question_id']))
+			&& $this->assignPoints('bestanswer', $questionUserId, $this->id)
+			&& $this->assignPoints('youranswerbest', $answerUserId, $this->id)
+		);
+		return $success;
 	}
 
 }
