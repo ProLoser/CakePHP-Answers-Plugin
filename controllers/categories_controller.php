@@ -16,7 +16,14 @@ class CategoriesController extends AnswersAppController {
 			$this->redirect(array('action'=>'index'));
 		}
 		$this->Category->recursive = 2;
-		$this->set('category', $this->Category->read(null, $id));
+		$category = $this->Category->read(null, $id);
+		$children = $this->Category->children($id);
+		foreach ($children as $child) {
+			$childData = $this->Category->read(null, $child['Category']['id']);
+			$category['Question'] = array_merge($category['Question'], $childData['Question']);
+			$category['Consultant'] = array_merge($category['Consultant'], $childData['Consultant']);
+		}
+		$this->set(compact('category'));
 	}
 
 	/*function add() {

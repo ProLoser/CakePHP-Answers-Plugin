@@ -87,11 +87,11 @@ class Question extends AnswersAppModel {
 	);
 	
 	function afterSave($created) {
-		$this->assignPoints('addquestion', $this->data['Question']['user_id'], $this->id);
+		$this->assignPoints('askquestion', $this->data['Question']['user_id'], $this->id);
 	}
 	
 	function beforeDelete() {
-		$this->removePoints('addquestion', $this->id);
+		$this->removePoints('askquestion', $this->id);
 	}
 }
 ?>

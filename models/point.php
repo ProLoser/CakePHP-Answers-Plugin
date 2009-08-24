@@ -19,10 +19,10 @@ class Point extends AnswersAppModel {
 	);
 	
 	function afterSave($created) {
-		if ($created) {			
+		if ($created) {
 			$this->User->UserStatistic->updateAll(
 				array('UserStatistic.points' => 'UserStatistic.points + '.$this->data['Point']['points']), 
-				array('UserStatistic.user_id' => $this->id)
+				array('UserStatistic.user_id' => $this->data['Point']['user_id'])
 			);
 		}
 	}

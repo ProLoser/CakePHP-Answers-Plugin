@@ -1,16 +1,6 @@
-<div class="userAnswerProfiles view">
+<div class="myProfile view">
 <h2><?php  __('My Online Profile');?></h2>
 	<dl><?php $i = 0; $class = ' class="altrow"';?>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $userAnswerProfile['UserAnswerProfile']['id']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('User Id'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $userAnswerProfile['UserAnswerProfile']['user_id']; ?>
-			&nbsp;
-		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Alias'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $userAnswerProfile['UserAnswerProfile']['alias']; ?>
@@ -79,19 +69,9 @@
 	</dl>
 </div>
 
-<div class="userAnswerProfiles view">
+<div class="myProfile view">
 <h2><?php  __('My Personal Profile');?></h2>
 	<dl><?php $i = 0; $class = ' class="altrow"';?>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $userAnswerProfile['User']['id']; ?>
-			&nbsp;
-		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Member Id'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $userAnswerProfile['User']['member_id']; ?>
-			&nbsp;
-		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Username'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $userAnswerProfile['User']['username']; ?>
@@ -111,14 +91,9 @@
 	</dl>
 </div>
 
-<div class="userAnswerProfiles view">
+<div class="myProfile view">
 <h2><?php  __('My Member Profile');?></h2>
 	<dl><?php $i = 0; $class = ' class="altrow"';?>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Member ID'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $userAnswerProfile['Member']['id']; ?>
-			&nbsp;
-		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('First Name'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $userAnswerProfile['Member']['first_name']; ?>
@@ -233,6 +208,23 @@
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $userAnswerProfile['Member']['expert']; ?>
 			&nbsp;
+		</dd>
+	</dl>
+</div>
+
+<div class="myProfile view">
+<h2><?php  __('My Point Profile');?></h2>
+	<dl><?php $i = 0; $class = ' class="altrow"';?>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Current level'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $userAnswerProfile['UserStatistic']['user_level_id']; ?>
+			&nbsp;
+		</dd>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Total Points Accumlated'); ?></dt>
+		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+			<?php echo $userAnswerProfile['UserStatistic']['points']; ?>
+			&nbsp;
+		</dd>
 		</dd>
 	</dl>
 </div>

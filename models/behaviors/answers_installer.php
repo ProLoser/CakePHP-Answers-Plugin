@@ -74,7 +74,6 @@ class AnswersInstallerBehavior extends ModelBehavior {
 		'hasMany'=> array(
 			'Answer' => array('className' => 'Answers.Answer'),				
 			'Question'=> array('className' => 'Answers.Question'),
-			'BestAnswer'=> array('className' => 'Answers.BestAnswer'),
 			'Report'=> array(
 				'className' => 'Answers.Report',
 				'dependent' => true
@@ -109,7 +108,7 @@ class AnswersInstallerBehavior extends ModelBehavior {
  * @access public
  */
 	function setup(&$Model, $settings) {
-		if (isset($settings['userModel']) && $settings['userModel']) {
+		if ($Model->alias == 'User') {
 			$this->userModel = true;
 			$this->_bindUserRelationships($Model);
 		}
@@ -127,8 +126,8 @@ class AnswersInstallerBehavior extends ModelBehavior {
  * @access public
  */
 	function afterSave(&$Model, $created) {
-		
-		if ($this->userModel && $created) {
+	    
+		if ($Model->alias == 'User' && $created) {	
 			// If a new user registered, create related profiles
 			if (!isset($this->data['UserAnswerProfile']) || empty($this->data['UserAnswerProfile'])) {
 				$data['UserAnswerProfile']['user_id'] = $Model->id;
@@ -184,7 +183,7 @@ class AnswersInstallerBehavior extends ModelBehavior {
  */
 	function assignPoints(&$Model, $code, $userId, $foreignKey = null) {
 		// If the current model is a user model, displace the loaded model instance so following code works
-		if ($this->userModel) {
+		if ($Model->alias == 'User') {
 			$Model = $Model->Point;
 		}
 		
