@@ -3,7 +3,6 @@
 	<fieldset>
  		<legend><?php __('Add UserAnswerProfile');?></legend>
 	<?php
-		echo $form->input('user_id');
 		echo $form->input('alias');
 		echo $form->input('avatar_option');
 		echo $form->input('show_link_profile');

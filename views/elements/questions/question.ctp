@@ -11,9 +11,10 @@ $question['id'],
 Inflector::slug($question['title'])
 )); ?>
 </h4>
-In <?php echo $html->link($question['Category']['name'], array('plugin'=>'answers','controller'=> 'categories', 'action'=>'view', $question['Category']['id'], Inflector::slug($question['Category']['name']))); ?> 
-- Asked by <?php echo $html->link($question['User']['username'], array('controller'=> 'user_answer_profiles', 'action'=>'view', $question['User']['id'])); ?> - <?php echo $question['answer_count']; ?> answers 
-- <?php echo $time->timeAgoInWords($question['created']); ?>
+
+<p>In <?php echo $html->link($question['Category']['name'], array('plugin'=>'answers','controller'=> 'categories', 'action'=>'view', $question['Category']['id'], Inflector::slug($question['Category']['name']))); ?> 
+- Asked by <?php echo $html->link($question['User']['UserAnswerProfile']['alias'], array('controller'=> 'user_answer_profiles', 'action'=>'view', $question['User']['id'])); ?> - <?php echo $question['answer_count']; ?> answers 
+- <?php echo $time->timeAgoInWords($question['created']); ?></p>
 
 
 

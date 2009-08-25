@@ -1,5 +1,5 @@
 <ul class="answers">
-<?php
+<?php 
 $i = 0;
 foreach ($answers['Answer'] as $answer):
 	$class = null;
@@ -26,7 +26,7 @@ foreach ($answers['Answer'] as $answer):
 			<?php echo $answer['answer']; ?>
 		</p>
 		<p>
-			<?php echo $html->link($answer['User']['username'], array('plugin'=>null, 'controller'=> 'user_answer_profiles', 'action'=>'view', $answer['User']['id'])); ?>
+			<?php echo $html->link($answer['User']['UserAnswerProfile']['alias'], array('plugin'=>null, 'controller'=> 'user_answer_profiles', 'action'=>'view', $answer['User']['id'])); ?>
 			- <?php echo $time->timeAgoInWords($answer['created']); ?>
 		</p>
 	</li>

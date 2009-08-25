@@ -8,8 +8,10 @@ class AnswersController extends AnswersAppController {
 			$this->Session->setFlash(__('Invalid Answer.', true));
 			$this->redirect(array('action'=>'index'));
 		}
+		
 		$this->set('answer', $this->Answer->read(null, $id));
 	}
+	
 	function index(){
 		$this->redirect(array('controller'=>'questions','action'=>'index'));
 	}

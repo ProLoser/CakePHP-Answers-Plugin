@@ -10,9 +10,13 @@ class QuestionsController extends AnswersAppController {
 	
 	function home() {
 		$this->set('questions', $this->Question->find('all', array(
-			'contain' => array('User', 'Category', 'FavoriteQuestion' => array(
-				'conditions' => array('FavoriteQuestion.user_id' => $this->Auth->user('id'))
-			))
+			'contain' => array(
+				'User', 'Category', 'FavoriteQuestion' => array(
+					'conditions' => array(
+						'FavoriteQuestion.user_id' => $this->Auth->user('id')
+					)
+				)
+			)
 		)));
 		$this->set('consultants', $this->Question->User->Member->Consultant->find('all'));
 	}
@@ -23,9 +27,14 @@ class QuestionsController extends AnswersAppController {
 				'conditions' => array('FavoriteQuestion.user_id' => $this->Auth->user('id'))
 			))
 		))); */
-		$this->paginate['contain'] = array('User', 'Category', 'FavoriteQuestion' => array(
-			'conditions' => array('FavoriteQuestion.user_id' => $this->Auth->user('id'))
-		));
+		$this->paginate['contain'] = array(
+			'User'=>array('UserAnswerProfile'), 'Category', 'FavoriteQuestion' => array(
+				'conditions' => array(
+					'FavoriteQuestion.user_id' => $this->Auth->user('id')
+				)
+			)
+		);
+
 		$this->set('questions', $this->paginate());
 	}
 	
@@ -46,7 +55,7 @@ class QuestionsController extends AnswersAppController {
 		$this->set('question', $this->Question->find('first', array(
 			'conditions' => array('Question.id' => $id),
 			'contain' => array('User', 'Topic', 'Category', 'BestAnswer','Answer' => array(
-				'User'
+				'User','User' => 'UserAnswerProfile',
 			))
 		)));
 	}
@@ -69,7 +78,6 @@ class QuestionsController extends AnswersAppController {
 		}
 		//$tags = $this->Question->Tag->find('list');
 		$topics = $this->Question->Topic->find('list');
-		$users = $this->Question->User->find('list');
 		$categories = $this->Question->Category->find('list');
 		$this->set(compact('tags', 'topics', 'users', 'categories'));
 	}

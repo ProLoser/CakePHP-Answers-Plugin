@@ -125,12 +125,12 @@ class AnswersInstallerBehavior extends ModelBehavior {
  * @return void
  * @access public
  */
-	function afterSave(&$Model, $created) {
-	    
+	function afterSave(&$Model, $created) {	
 		if ($Model->alias == 'User' && $created) {	
 			// If a new user registered, create related profiles
 			if (!isset($this->data['UserAnswerProfile']) || empty($this->data['UserAnswerProfile'])) {
 				$data['UserAnswerProfile']['user_id'] = $Model->id;
+				$data['UserAnswerProfile']['alias'] = $this->data['Member']['first_name']. ' '.substr($this->data['Member']['last_name'], 0, 1);
 				$Model->UserAnswerProfile->save($data);
 			}
 			if (!isset($this->data['UserStatistic']) || empty($this->data['UserStatistic'])) {

@@ -6,11 +6,6 @@
 			<?php echo $userAnswerProfile['UserAnswerProfile']['id']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('User Id'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $userAnswerProfile['UserAnswerProfile']['user_id']; ?>
-			&nbsp;
-		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Alias'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $userAnswerProfile['UserAnswerProfile']['alias']; ?>
