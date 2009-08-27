@@ -21,6 +21,17 @@ class UserStatistic extends AnswersAppModel {
 			'className' => 'Answers.UserLevel'
 		)
 	);
+	
+	function afterSave($created) {
+		
+		if ($created) {
+			
+			// Give user registration points
+			$this->User->assignPoints('register', $this->data['UserStatistic']['user_id'], $this->id);
+			
+		}
+		
+	}
 
 }
 ?>

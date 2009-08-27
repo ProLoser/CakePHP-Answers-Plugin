@@ -42,7 +42,7 @@ foreach ($questions as $question):
 			<?php echo $question['Question']['details']; ?>
 		</td>
 		<td>
-			<?php echo $html->link($question['User']['username'], array('controller'=> 'users', 'action'=>'view', $question['User']['id'])); ?>
+			<?php //echo $html->link($question['User']['username'], array('controller'=> 'users', 'action'=>'view', $question['User']['id'])); ?>
 		</td>
 		<td>
 			<?php echo $html->link($question['Category']['name'], array('controller'=> 'categories', 'action'=>'view', $question['Category']['id'])); ?>

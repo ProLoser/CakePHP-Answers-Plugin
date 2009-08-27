@@ -11,7 +11,7 @@ class FavoriteQuestionsController extends AnswersAppController {
 					'Category.id',
 					'Category.name',
 					'User.id',
-					'User.username', 
+//					'User.username', 
 				),
 			)
 		)));

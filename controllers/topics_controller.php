@@ -28,7 +28,7 @@ class TopicsController extends AnswersAppController {
 					'User' => array(
 						'fields' => array(
 							'id',
-							'username'
+//							'username'
 						),
 					),
 				),

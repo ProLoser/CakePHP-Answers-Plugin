@@ -2,7 +2,9 @@
 class UserAnswerProfile extends AnswersAppModel {
 
 	var $name = 'UserAnswerProfile';
+	var $displayField = 'alias';
 	var $validate = array(
+		'alias' => array('notEmpty'),
 		'avatar_option' => array('numeric'),
 		'show_link_profile' => array('boolean'),
 		'allow_contact' => array('boolean'),

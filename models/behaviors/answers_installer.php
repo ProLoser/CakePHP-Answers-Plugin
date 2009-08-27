@@ -125,6 +125,11 @@ class AnswersInstallerBehavior extends ModelBehavior {
  * @return void
  * @access public
  */
+ 
+ /*  moving this check and update points to the user_controller where it'll evaluate if the user
+     has a UserAnswerProfile and UserStatistic profile, just incase users from other sites
+	 are atempting to migrate from other websites.
+	 
 	function afterSave(&$Model, $created) {	
 		if ($Model->alias == 'User' && $created) {	
 			// If a new user registered, create related profiles
@@ -137,10 +142,9 @@ class AnswersInstallerBehavior extends ModelBehavior {
 				$data['UserStatistic']['user_id'] = $Model->id;
 				$Model->UserStatistic->save($data);
 			}
-			// Give user registration points
-			$Model->assignPoints('register', $Model->id, $Model->id);
 		}
 	}
+*/
 	
 /**
  * Check the limits of the target user to see if they are allowed to post more content
